@@ -228,6 +228,62 @@
     border-bottom: 1px solid var(--hairline);
     line-height: 1.5;
   }
+
+  /* ── 어제 narrative 3섹션 (workflow / wins / improvements) ── */
+  .wf-summary {
+    font-family: var(--f-text);
+    font-size: 14px; line-height: 1.7;
+    color: var(--ink-1);
+    margin: 0 0 16px 0;
+    padding: 14px 16px;
+    background: var(--paper-2);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+  }
+  .wf-summary b { font-weight: 700; color: var(--accent); }
+  .wf-list {
+    list-style: none; padding: 0; margin: 0;
+    display: grid; gap: 8px;
+  }
+  .wf-list li {
+    padding: 10px 12px;
+    background: var(--paper-2);
+    border-left: 2px solid var(--hairline);
+    border-radius: 4px;
+    font-family: var(--f-text); font-size: 13px;
+  }
+  .wf-list .wf-time {
+    font-family: var(--f-mono); font-size: 11px;
+    color: var(--ink-3); letter-spacing: 0.04em; margin-right: 8px;
+  }
+  .wf-list .wf-count {
+    font-family: var(--f-mono); font-size: 10px;
+    color: var(--accent); padding: 1px 6px; border-radius: 999px;
+    background: rgba(0,0,0,0.04); margin-left: 6px;
+  }
+  .wf-list .wf-msg {
+    margin-top: 4px; font-size: 12px; color: var(--ink-2);
+    word-break: keep-all;
+  }
+  .wins-list, .imp-list {
+    list-style: none; padding: 0; margin: 0;
+    display: grid; gap: 8px;
+  }
+  .wins-list li, .imp-list li {
+    padding: 10px 14px;
+    background: var(--paper-2);
+    border-radius: 4px;
+    font-family: var(--f-text); font-size: 13.5px; line-height: 1.6;
+    word-break: keep-all;
+  }
+  .wins-list li { border-left: 3px solid #34a853; }
+  .imp-list li  { border-left: 3px solid #fbbc04; }
+  .wins-list b, .imp-list b { font-weight: 700; color: var(--ink-1); }
+  .wins-list code, .imp-list code {
+    font-family: var(--f-mono); font-size: 11px;
+    background: rgba(0,0,0,0.05); padding: 1px 5px; border-radius: 3px;
+  }
+  /* /wf-list/wins-list/imp-list */
   .section .byline {
     font-family: var(--f-mono);
     font-size: 9px;
@@ -610,130 +666,31 @@
     <ul class='task-list'><li>AI PPT 템플릿 제작</li><li>서준이 과제 진행 검토</li><li>회사 챗봇 만들기</li><li>The Universe 오케스트레이터 설계</li><li>The Universe 데모 시나리오 v1 실행</li><li>llm-wiki 소스 ingest 파이프라인 검증</li></ul>
   </div>
 
-  <div class="insight-section">
-    <h2>Insight of the Day</h2>
-    <article class="insight">
-  <div class="insight-cover" data-cat="strategy">🎯</div>
-  <div class="insight-body">
-    <div class="insight-meta"><span class="insight-author">자비스 인사이트</span> · <span class="insight-pub">상품화</span></div>
-    <h3 class="insight-head">AI PPT 템플릿이 이번 주 자비스의 두 번째 외부 자산이다</h3>
-    <p class="insight-lede">IDF 8건이 특허팀으로 이관됐듯, "마크다운 1장 → 슬라이드 30장" 변환 패턴은 자비스 뇌 밖으로 나갈 수 있는 두 번째 자산이다. 지금은 회사 안에서 발표마다 30분씩 매번 다시 만든다.</p>
-    <p class="insight-benefit"><span class="label">실행 결과 →</span> 다음 발표 1건이 30분 안에 초고로 떨어지고, 매주 슬라이드 만드는 일이 자비스에게 위임된다.</p>
-    <div class="insight-foot"><span class="readtime">3 min read</span><span class="dot">·</span><span class="impact">자비스 뇌, 모든 후속 발표</span></div>
-    <p class="insight-step">첫 발 → python-pptx로 커버+목차 슬라이드 1장 + md→pptx 변환 함수 1개를 2시간 블록 안에 prototype.</p>
-  </div>
-</article>
-<article class="insight">
-  <div class="insight-cover" data-cat="pattern">🧩</div>
-  <div class="insight-body">
-    <div class="insight-meta"><span class="insight-author">자비스 인사이트</span> · <span class="insight-pub">작업 흐름</span></div>
-    <h3 class="insight-head">Check/Report 분리는 daily-report만이 아니라 wiki ingest의 다음 골격이다</h3>
-    <p class="insight-lede">daily-report 3→1 통합에서 'Check 레이어' 분리가 통한 이유는 검증과 표현이 다른 책임이기 때문이다. ingest도 source 무결성 검사와 페이지 갱신이 한 스크립트에 섞여 있어 lint 추적이 어렵다.</p>
-    <p class="insight-benefit"><span class="label">실행 결과 →</span> ingest가 두 단계로 갈라지면 source 변경 dry-run이 가능해지고, Karpathy 6원칙의 "ingest = 10~15 페이지 갱신" 단계가 측정 가능한 지표가 된다.</p>
-    <div class="insight-foot"><span class="readtime">3 min read</span><span class="dot">·</span><span class="impact">$NENE/wiki 전체, 모든 ingest 호출</span></div>
-    <p class="insight-step">첫 발 → /ingest 명령에 --check-only 플래그를 30분 안에 추가하고 source 1건으로 dry-run 1회.</p>
-  </div>
-</article>
-<article class="insight">
-  <div class="insight-cover" data-cat="principle">📐</div>
-  <div class="insight-body">
-    <div class="insight-meta"><span class="insight-author">자비스 인사이트</span> · <span class="insight-pub">네트워크 효과</span></div>
-    <h3 class="insight-head">wiki/debates/는 기록이 아니라 첫 RLHF 데이터 공장이다</h3>
-    <p class="insight-lede">debate-to-pairs.py는 이미 동작한다. 즉 매주 쌓는 3-Round 토론 1건마다 8~12개의 채택/기각 쌍이 자동으로 생성된다. 50건이 모이면 creator_chain 첫 fine-tune이 외부 데이터셋 없이 가능하다.</p>
-    <p class="insight-benefit"><span class="label">실행 결과 →</span> 일상 토론 자체가 학습 데이터가 되어, 자비스 답변 품질이 wiki 페이지가 늘어날수록 누적적으로 강해지는 구조가 작동한다.</p>
-    <div class="insight-foot"><span class="readtime">4 min read</span><span class="dot">·</span><span class="impact">creator_chain L5/L6, jarvis-self Dash</span></div>
-    <p class="insight-step">첫 발 → 오늘 debates/ 50쌍 jsonl을 jarvis-self Dash 1개에 reward signal로 적용해서 채택률 1회 측정.</p>
-  </div>
-</article>
-<article class="insight">
-  <div class="insight-cover" data-cat="identity">🪞</div>
-  <div class="insight-body">
-    <div class="insight-meta"><span class="insight-author">자비스 인사이트</span> · <span class="insight-pub">정체성</span></div>
-    <h3 class="insight-head">자비스의 본업은 wiki 큐레이터지 채널 운영자가 아니다</h3>
-    <p class="insight-lede">최근 5주 커밋 기록의 80% 이상이 채널 fleet, WT 탭, 좀비 정리, PID registry 같은 인프라다. CLAUDE.md의 "본업 = LLM Wiki" 선언과 실제 시간 사용이 갈라진다. 인프라는 거의 끝났다 — 축을 본업으로 돌릴 시점이다.</p>
-    <p class="insight-benefit"><span class="label">실행 결과 →</span> 주 1회 wiki 페이지를 실제 LLM 답변원으로 쓰는 시간이 박히면 "페이지가 답을 만든다 vs 인프라가 답을 만든다"가 정량 비교 가능해진다.</p>
-    <div class="insight-foot"><span class="readtime">3 min read</span><span class="dot">·</span><span class="impact">자비스 정체성, 다음 4주 우선순위</span></div>
-    <p class="insight-step">첫 발 → 매주 일요일 18시 "wiki 답변원 검증 30분" 슬롯을 Calendar에 반복 등록.</p>
-  </div>
-</article>
-<article class="insight">
-  <div class="insight-cover" data-cat="readme">📜</div>
-  <div class="insight-body">
-    <div class="insight-meta"><span class="insight-author">자비스 인사이트</span> · <span class="insight-pub">미래 원칙</span></div>
-    <h3 class="insight-head">Dash 통합 원칙은 회사 챗봇 설계에도 그대로 적용된다</h3>
-    <p class="insight-lede">Dash는 위젯이 아니라 "처음부터 통합된 첫 화면"이다. 회사 챗봇도 Q&A 부착물로 만들면 또 잊혀진 탭이 된다. 직원의 "업무 첫 화면" 자체가 챗봇이어야 사용 빈도가 부착물 대비 5~10배 높아진다.</p>
-    <p class="insight-benefit"><span class="label">실행 결과 →</span> 챗봇이 "물어보면 답하는 도구"가 아니라 "출근하면 보이는 화면"으로 자리잡고, 2주 시범 후 "썼다/안 썼다" 판정이 단순해진다.</p>
-    <div class="insight-foot"><span class="readtime">4 min read</span><span class="dot">·</span><span class="impact">회사 챗봇 프로젝트, The Universe 데모</span></div>
-    <p class="insight-step">첫 발 → 챗봇 첫 화면 와이어프레임 1장을 "Q&A창" 대신 "오늘 업무 카드"로 그리기.</p>
-  </div>
-</article>
+  <div class="section">
+    <div class="kicker">Section B · Yesterday in Motion</div>
+    <h2>어제 작업 흐름</h2>
+    <div class="subhead">시간순 commit 분포 + 프로젝트 분산. 데이터로 본 어제의 이야기.</div>
+    <p class='wf-summary'>어제 <b>06:00</b> ~ <b>17:41</b> 사이 <b> 커밋</b> (12시간 41분 분산). 주력: <b>Jarvis-llm-wiki</b> 11건 · <b>jarvis-briefing</b> 1건 · 자가학습 메모리 <b>20</b>건</p><ul class='wf-list'><li><span class='wf-time'>06:00</span> <b>jarvis-briefing</b> <span class='wf-count'>1건</span><div class='wf-msg'>briefing: 2026-05-02</div></li><li><span class='wf-time'>12:12~17:41</span> <b>Jarvis-llm-wiki</b> <span class='wf-count'>11건</span><div class='wf-msg'>feat: 채널 fleet no-Electron 전환 + 자비스 자가보고 + 운영 인프라 정비</div></li></ul>
   </div>
 
   <div class="section">
-    <div class="kicker">Section B · Editor's Picks</div>
-    <h2>어제 활동 기반 추천 5개</h2>
-    <div class="subhead">어제 12건의 커밋 활동이 있었다. 어제 작업에서 오늘 바로 이어갈 수 있는 제안을 골랐다.</div>
-    <article class="insight">
-  <div class="insight-cover" data-cat="strategy">🎯</div>
-  <div class="insight-body">
-    <div class="insight-meta"><span class="insight-author">오늘의 추천</span> · <span class="insight-pub">이번 주 목표 첫 삽</span></div>
-    <h3 class="insight-head">AI PPT 템플릿: 커버 슬라이드 + md→pptx 변환 함수 prototype</h3>
-    <p class="insight-lede">이번 주 목표인데 미시작이다. 변환 함수 없이는 템플릿이 외부 자산이 못 되고 또 다음 주로 밀린다. 2시간 블록 1개면 prototype은 충분하다.</p>
-    <p class="insight-benefit"><span class="label">실행 결과 →</span> 다음 발표 1건의 초고가 30분 안에 떨어지고, 슬라이드 첫 30분이 자비스에게 위임된다.</p>
-    <div class="insight-foot"><span class="readtime">2시간 블록</span><span class="dot">·</span><span class="impact">자비스 뇌, 모든 발표 자료</span></div>
-    <p class="insight-step">액션 → 오늘 14~16시 블록 잡고 python-pptx로 커버+목차 1장 생성 함수 1개 작성, 샘플 md 1건으로 변환 검증.</p>
-  </div>
-</article>
-<article class="insight">
-  <div class="insight-cover" data-cat="pattern">🧩</div>
-  <div class="insight-body">
-    <div class="insight-meta"><span class="insight-author">오늘의 추천</span> · <span class="insight-pub">이관 후 정리</span></div>
-    <h3 class="insight-head">wiki/projects/The Universe lint 1회 + IDF 이관 ROI 1줄 회고</h3>
-    <p class="insight-lede">IDF 8건이 특허팀으로 넘어간 뒤 페이지 상태가 미점검이다. orphan/모순/empty가 쌓이면 다음 ingest가 위험해진다. 이관 직후가 회고의 가장 좋은 시점이다.</p>
-    <p class="insight-benefit"><span class="label">실행 결과 →</span> wiki 무결성이 1회 확인되고, "이관에서 무엇을 얻었나" 1줄이 다음 IDF 정책 결정의 기준점이 된다.</p>
-    <div class="insight-foot"><span class="readtime">40분</span><span class="dot">·</span><span class="impact">$NENE/wiki/projects/The Universe</span></div>
-    <p class="insight-step">액션 → /lint wiki/projects/The Universe 실행 → 결과를 orphan/모순/stale/empty 4개로 분류 + ROI 1줄 wiki/projects/The Universe/index.md 상단에 추가.</p>
-  </div>
-</article>
-<article class="insight">
-  <div class="insight-cover" data-cat="identity">🪞</div>
-  <div class="insight-body">
-    <div class="insight-meta"><span class="insight-author">오늘의 추천</span> · <span class="insight-pub">회사 챗봇 출발점</span></div>
-    <h3 class="insight-head">회사 챗봇 사용 케이스 1개 확정 + 2주 시범 페이지 작성</h3>
-    <p class="insight-lede">챗봇 만들기 전에 "어떤 30분/하루 반복 작업을 자동화할지"가 비어 있다. 후보 3개를 적고 1개 고르지 않으면 챗봇 골격이 또 부유물이 된다.</p>
-    <p class="insight-benefit"><span class="label">실행 결과 →</span> 사용 케이스 1개가 박히면 챗봇 평가 기준이 단순해지고, 2주 후 "썼다/안 썼다" 정량 판정이 가능해진다.</p>
-    <div class="insight-foot"><span class="readtime">1시간</span><span class="dot">·</span><span class="impact">회사 챗봇 프로젝트, AI 교육 후속</span></div>
-    <p class="insight-step">액션 → $NENE/wiki/projects/회사-챗봇/use-case-후보.md 새로 작성 (후보 3개 + 채택 1개 + 2주 KPI 2개).</p>
-  </div>
-</article>
-<article class="insight">
-  <div class="insight-cover" data-cat="readme">📜</div>
-  <div class="insight-body">
-    <div class="insight-meta"><span class="insight-author">오늘의 추천</span> · <span class="insight-pub">강의 사전 작업</span></div>
-    <h3 class="insight-head">AI 교육 week 2 instructor 노트 30분 브레인스토밍</h3>
-    <p class="insight-lede">week 1 자료 생성 후 멈춤이다. week 2 주제·학생 과제·실습이 비어 있고, 이번 주 안에 강의가 잡히면 또 밤샘이 된다. 30분 블록이면 골격은 잡힌다.</p>
-    <p class="insight-benefit"><span class="label">실행 결과 →</span> week 2 주제 1개 + 학생 과제 1개 + 실습 흐름 4단계가 페이지로 박혀, 강의 직전 황급함이 사라진다.</p>
-    <div class="insight-foot"><span class="readtime">30분</span><span class="dot">·</span><span class="impact">AI 팀 교육 8주, instructor 노트</span></div>
-    <p class="insight-step">액션 → ai-education-week2-instructor.md 새 페이지 + 30분 brainstorm 결과를 그대로 섹션화 (주제/과제/실습/평가).</p>
-  </div>
-</article>
-<article class="insight">
-  <div class="insight-cover" data-cat="meta">🧠</div>
-  <div class="insight-body">
-    <div class="insight-meta"><span class="insight-author">오늘의 추천</span> · <span class="insight-pub">RLHF 1차 검증</span></div>
-    <h3 class="insight-head">creator_chain debate-to-pairs.py 50쌍 → jarvis-self Dash 1개 reward 적용</h3>
-    <p class="insight-lede">스크립트는 이미 작동한다. 적용 검증이 미실행이다. 50쌍이 실제로 답변 채택률을 바꾸는지 측정하지 않으면 RLHF 자산이 죽은 채로 쌓이기만 한다.</p>
-    <p class="insight-benefit"><span class="label">실행 결과 →</span> 채택률 변화가 숫자로 찍히면 다음 200쌍을 모을지 접을지 결정이 가능해지고, "wiki = 학습 공장" 가설이 1차 검증된다.</p>
-    <div class="insight-foot"><span class="readtime">1시간</span><span class="dot">·</span><span class="impact">creator_chain L5/L6, jarvis-self</span></div>
-    <p class="insight-step">액션 → jarvis-self Dash 1개 선정 → reward 적용 전/후 variants=3 답변의 채택률 차이 측정 + notes/rlhf-pilot-1.md 1줄 결론.</p>
-  </div>
-</article>
+    <div class="kicker">Section C · What Worked</div>
+    <h2>잘된 점</h2>
+    <div class="subhead">어제 패턴에서 자비스가 뽑은 긍정 신호.</div>
+    <ul class='wins-list'><li>📈 <b>활발한 작업</b> — 어제  commit 으로 평균 이상의 코딩 흐름</li><li>✨ <b>commit message 품질 우수</b> — Conventional Commits 형식 92% 준수 (feat/fix/chore 명확)</li><li>🔀 <b>멀티 프로젝트 운영</b> — 2개 repo 동시 진행: jarvis-briefing, Jarvis-llm-wiki</li><li>🧠 <b>자가학습 활성</b> — 어제 자비스 메모리 20건 누적, personality 진화</li></ul>
   </div>
 
   <div class="section">
-    <div class="kicker">Section C · Yesterday in Review</div>
+    <div class="kicker">Section D · Where to Improve</div>
+    <h2>개선 제안</h2>
+    <div class="subhead">필요한 것만 골랐다. 5개 내외, 데이터 기반.</div>
+    <ul class='imp-list'><li>🚀 <b>로컬 commit push 동기화</b> — 2개 repo 에 unpushed: resonance (12개), Dauni-Videodownloader (1개). <code>git push</code> 권장</li><li>🚨 <b>Nene Vault 헬스 FAIL</b> — broken links 0. <code>/lint</code> 또는 broken wikilink 직접 fix</li><li>🔧 <b>'feat' 패턴 집중</b> — 건 중 8건. 동일 영역 반복 작업 — 시각·테스트 정리 한번 묶을 시점</li></ul>
+  </div>
+
+  <div class="section">
+    <div class="kicker">Section E · Yesterday's Ledger</div>
     <h2>어제 커밋 내역</h2>
-    <div class="subhead">저장소별 어제 커밋 기록.</div>
+    <div class="subhead">저장소별 어제 커밋 기록 (raw).</div>
     <table class="ledger">
       <thead>
         <tr><th>Repository</th><th>#</th><th>Commit Message</th></tr>
@@ -745,32 +702,18 @@
   </div>
 
   <div class="section">
-    <div class="kicker">Section D · Outlook</div>
-    <h2>중기 계획 (1~2개월)</h2>
-    <div class="ko-head">이번 분기 안에 마무리할 항목들</div>
-    <ul class='task-list'><li>The Universe 수익 포인트 정리</li><li>The Universe 슬라이드 업데이트</li><li>서준이 데이터 수집 (5개 데이터셋)</li><li>펌프센터 기획 초안</li><li>AI 교육 커리큘럼 8주차 완성</li><li>Bixby Routines 사례 패턴화</li></ul>
-  </div>
-
-  <div class="section">
-    <div class="kicker">Section E · Horizon</div>
-    <h2>장기 계획 (3개월+)</h2>
-    <div class="ko-head">월 1회 점검하는 장기 방향</div>
-    <ul class='task-list'><li>바이브 게임즈</li><li>AI 개발팀</li><li>Gen Customization</li><li>Style generator 검토</li><li>Bixby Routines 패턴화 자동화</li><li>Korean Law MCP 에이전트 구축</li></ul>
-  </div>
-
-  <div class="section">
     <div class="kicker">Section F · Systems Status</div>
     <h2>기록실</h2>
     <div class="status-line">
       <span class="item"><span class="key">Nene Vault</span><span class="val">FAIL · 281 pages · 0 broken links</span></span>
       <span class="item"><span class="key">자비스 Fleet</span><span class="val">RUNNING · Jarvis PID 26804 · 채널 🟢3 ⚪0 🔗7 🚫0</span></span>
-      <span class="item"><span class="key">Briefing Sent</span><span class="val">06:03 KST</span></span>
+      <span class="item"><span class="key">Briefing Sent</span><span class="val">09:51 KST</span></span>
     </div>
   </div>
 
   <div class="colophon">
     <div class="brand">JARVIS NEWSROOM</div>
-    <div>No. 19 &nbsp;·&nbsp; 2026-05-03 &nbsp;·&nbsp; 06:03 &nbsp;·&nbsp; All briefs handwritten by a machine</div>
+    <div>No. 19 &nbsp;·&nbsp; 2026-05-03 &nbsp;·&nbsp; 09:51 &nbsp;·&nbsp; All briefs handwritten by a machine</div>
   </div>
 
 </div>
