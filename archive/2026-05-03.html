@@ -538,7 +538,50 @@
   }
 
   /* ─────────────────────────────
-     STATUS LINE (systems)
+     SNAPSHOT (자비스 현황)
+     ───────────────────────────── */
+  .snapshot {
+    display: grid; gap: 6px;
+    padding: 14px 0;
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .snap-row {
+    display: grid; grid-template-columns: 1fr;
+    gap: 2px;
+    padding: 8px 12px;
+    background: var(--paper-2);
+    border-radius: 4px;
+    font-family: var(--f-text); font-size: 13px;
+    line-height: 1.5;
+    word-break: break-word;
+  }
+  @media (min-width: 480px) {
+    .snap-row { grid-template-columns: 110px 1fr; gap: 12px; align-items: baseline; }
+  }
+  .snap-row .snap-key {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    color: var(--ink-4);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+  }
+  .snap-row .snap-val {
+    color: var(--ink-1);
+    font-weight: 500;
+  }
+  .snap-row .snap-val code {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    background: rgba(0,0,0,0.05);
+    padding: 1px 5px;
+    border-radius: 3px;
+    color: var(--accent);
+  }
+
+  /* ─────────────────────────────
+     STATUS LINE (legacy, retained for any leftover refs)
      ───────────────────────────── */
   .status-line {
     font-family: var(--f-mono);
@@ -640,55 +683,46 @@
 
   <div class="ticker">
     <div class="cell">
-      <span class="label">Total Tasks</span>
-      <span class="value">19</span>
-    </div>
-    <div class="cell">
       <span class="label">Yesterday Commits</span>
       <span class="value">12</span>
     </div>
     <div class="cell">
-      <span class="label">Wiki Pages</span>
-      <span class="value">283</span>
+      <span class="label">Wiki Updated</span>
+      <span class="value">0</span>
     </div>
     <div class="cell">
-      <span class="label">Systems</span>
+      <span class="label">Memory Learned</span>
+      <span class="value">20</span>
+    </div>
+    <div class="cell">
+      <span class="label">Vault Health</span>
       <span class="value" style="color: #ea4335">FAIL</span>
     </div>
   </div>
-  
 
   <div class="section">
-    <div class="kicker">Section A · Today's Priorities</div>
-    <h2>오늘, 이것만.</h2>
-    <div class="ko-head">단기 할 일 — 이번 주에서 2주 안에 정리되어야 할 사안들</div>
-    <div class="byline">By 자비스 · 할-일-모음.md</div>
-    <ul class='task-list'><li>AI PPT 템플릿 제작</li><li>서준이 과제 진행 검토</li><li>회사 챗봇 만들기</li><li>The Universe 오케스트레이터 설계</li><li>The Universe 데모 시나리오 v1 실행</li><li>llm-wiki 소스 ingest 파이프라인 검증</li></ul>
-  </div>
-
-  <div class="section">
-    <div class="kicker">Section B · Yesterday in Motion</div>
+    <div class="kicker">Section A · Yesterday in Motion</div>
     <h2>어제 작업 흐름</h2>
     <div class="subhead">시간순 commit 분포 + 프로젝트 분산. 데이터로 본 어제의 이야기.</div>
     <p class='wf-summary'>어제 <b>06:00</b> ~ <b>17:41</b> 사이 <b>12개 커밋</b> (12시간 41분 분산). 주력: <b>Jarvis-llm-wiki</b> 11건 · <b>jarvis-briefing</b> 1건 · 자가학습 메모리 <b>20</b>건</p><ul class='wf-list'><li><span class='wf-time'>06:00</span> <b>jarvis-briefing</b> <span class='wf-count'>1건</span><div class='wf-msg'>briefing: 2026-05-02</div></li><li><span class='wf-time'>12:12~17:41</span> <b>Jarvis-llm-wiki</b> <span class='wf-count'>11건</span><div class='wf-msg'>feat: 채널 fleet no-Electron 전환 + 자비스 자가보고 + 운영 인프라 정비</div></li></ul>
   </div>
 
   <div class="section">
-    <div class="kicker">Section C · What Worked</div>
+    <div class="kicker">Section B · What Worked</div>
     <h2>잘된 점</h2>
     <div class="subhead">어제 패턴에서 자비스가 뽑은 긍정 신호.</div>
     <ul class='wins-list'><li>📈 <b>활발한 작업</b> — 어제 12개 commit 으로 평균 이상의 코딩 흐름</li><li>✨ <b>commit message 품질 우수</b> — Conventional Commits 형식 92% 준수 (feat/fix/chore 명확)</li><li>🔀 <b>멀티 프로젝트 운영</b> — 2개 repo 동시 진행: jarvis-briefing, Jarvis-llm-wiki</li><li>🧠 <b>자가학습 활성</b> — 어제 자비스 메모리 20건 누적, personality 진화</li></ul>
   </div>
 
   <div class="section">
-    <div class="kicker">Section D · Where to Improve</div>
+    <div class="kicker">Section C · Where to Improve</div>
     <h2>개선 제안</h2>
     <div class="subhead">필요한 것만 골랐다. 5개 내외, 데이터 기반.</div>
     <ul class='imp-list'><li>🚀 <b>로컬 commit push 동기화</b> — 2개 repo 에 unpushed: resonance (12개), Dauni-Videodownloader (1개). <code>git push</code> 권장</li><li>🚨 <b>Nene Vault 헬스 FAIL</b> — broken links 0. <code>/lint</code> 또는 broken wikilink 직접 fix</li><li>🔧 <b>'feat' 패턴 집중</b> — 12건 중 8건. 동일 영역 반복 작업 — 시각·테스트 정리 한번 묶을 시점</li></ul>
   </div>
 
   <div class="section">
-    <div class="kicker">Section E · Yesterday's Ledger</div>
+    <div class="kicker">Section D · Yesterday's Ledger</div>
     <h2>어제 커밋 내역</h2>
     <div class="subhead">저장소별 어제 커밋 기록 (raw).</div>
     <table class="ledger">
@@ -702,18 +736,23 @@
   </div>
 
   <div class="section">
-    <div class="kicker">Section F · Systems Status</div>
-    <h2>기록실</h2>
-    <div class="status-line">
-      <span class="item"><span class="key">Nene Vault</span><span class="val">FAIL · 283 pages · 0 broken links</span></span>
-      <span class="item"><span class="key">자비스 Fleet</span><span class="val">RUNNING · Jarvis PID 26804 · 채널 🟢3 ⚪0 🔗7 🚫0</span></span>
-      <span class="item"><span class="key">Briefing Sent</span><span class="val">09:55 KST</span></span>
+    <div class="kicker">Section E · Today's Jarvis Snapshot</div>
+    <h2>자비스 현황</h2>
+    <div class="subhead">자비스 본체 + 채널 fleet + 자가학습 + 직전·예정 활동.</div>
+    <div class="snapshot">
+      <div class="snap-row"><span class="snap-key">자비스 본체</span><span class="snap-val">PID <code>26804</code> · uptime 23h 13m · heartbeat fresh (10s)</span></div>
+      <div class="snap-row"><span class="snap-key">채널 Fleet</span><span class="snap-val">🟢3 running · ⚪0 idle · 🔗7 pool · 🚫0 disabled</span></div>
+      <div class="snap-row"><span class="snap-key">자가학습</span><span class="snap-val">54건 누적 · 어제 +20건</span></div>
+      <div class="snap-row"><span class="snap-key">Nene Vault</span><span class="snap-val">FAIL · 283 pages · 0 broken</span></div>
+      <div class="snap-row"><span class="snap-key">직전 활동</span><span class="snap-val">어제 17:41 · <code>Jarvis-llm-wiki</code> · feat(ops): JarvisDailyReport 통합 (3→1) + Task 카탈로그 …</span></div>
+      <div class="snap-row"><span class="snap-key">다음 cron</span><span class="snap-val">05-03 10:22 · <code>Jarvis-HeartbeatWatcher</code></span></div>
+      <div class="snap-row"><span class="snap-key">Briefing Sent</span><span class="snap-val">10:20 KST</span></div>
     </div>
   </div>
 
   <div class="colophon">
     <div class="brand">JARVIS NEWSROOM</div>
-    <div>No. 19 &nbsp;·&nbsp; 2026-05-03 &nbsp;·&nbsp; 09:55 &nbsp;·&nbsp; All briefs handwritten by a machine</div>
+    <div>No. 19 &nbsp;·&nbsp; 2026-05-03 &nbsp;·&nbsp; 10:20 &nbsp;·&nbsp; All briefs handwritten by a machine</div>
   </div>
 
 </div>
